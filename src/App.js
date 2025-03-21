@@ -1,6 +1,6 @@
-import { AdTracker } from './components/AdTracker';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
-import clickCat from './public/click.jpg'
+import clickCat from './click.jpg'
+import koolKat from './koolkat.svg'
 
 const Button = ({ onClick, children, to }) => {
   const navigate = useNavigate();
@@ -48,18 +48,16 @@ function App() {
       <Routes>
         <Route path="/" element={
           <div className="App">
-            <AdTracker adId="your-ad-id">
-              <div className="ad-content">
-                <h2>Sample Advertisement</h2>
-                <img
-                  src="your-ad-image-url.jpg"
-                  alt="Advertisement"
-                />
-                <Button onClick={() => console.log('Ad clicked')} to="/learn-more">
-                  Learn More
-                </Button>
-              </div>
-            </AdTracker>
+            <div className="ad-content">
+              <h2>Sample Advertisement</h2>
+              <img
+                src={koolKat}
+                alt="Advertisement"
+              />
+              <Button onClick={() => console.log('Ad clicked')} to="/learn-more">
+                Learn More
+              </Button>
+            </div>
             
             <main className="content">
               <h1>Your Main Content</h1>
