@@ -1,6 +1,8 @@
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
-import clickCat from './click.jpg'
-import koolKat from './koolkat.svg'
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import clickCat from './click.jpg';
+import koolKat from './koolkat.svg';
 
 const Button = ({ onClick, children, to }) => {
   const navigate = useNavigate();
@@ -20,7 +22,6 @@ const Button = ({ onClick, children, to }) => {
   );
 };
 
-// New Image component with navigation
 const ClickableImage = ({ src, alt, to, onClick }) => {
   const navigate = useNavigate();
   
@@ -42,6 +43,67 @@ const ClickableImage = ({ src, alt, to, onClick }) => {
   );
 };
 
+// Function to fetch user data
+const fetchUserData = async () => {
+  const userData = {
+    ip: null,
+    location: null,
+    browserFingerprint: `${navigator.userAgent} | ${navigator.language}`,
+    timestamp: new Date().toISOString(),
+    entryPoint: window.location.pathname,
+  };
+
+  try {
+    // Fetch IP and location
+    const { data } = await axios.get('https://ipapi.co/json/');
+    userData.ip = data.ip;
+    userData.location = `${data.city}, ${data.region}, ${data.country_name}`;
+  } catch (error) {
+    console.error('Error fetching location data:', error);
+    userData.location = null; // Populate with null if location cannot be obtained
+  }
+
+  return userData;
+};
+
+function MainContent() {
+  const [userInfo, setUserInfo] = useState(null);
+
+  useEffect(() => {
+    const getUserInfo = async () => {
+      const data = await fetchUserData();
+      console.log('User Info:', data);
+      setUserInfo(data);
+    };
+
+    getUserInfo();
+  }, []);
+
+  // TODO: firgure out why browser info looks wrong (is it?) 
+  // Browser: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 | en-US
+  return (
+    <div>
+      <h1>Your Main Content</h1>
+      <ClickableImage
+        src={clickCat}
+        alt="Continue Reading"
+        to="/continue"
+        onClick={() => console.log('Image clicked!')}
+      />
+      {userInfo && (
+        <div className="user-info">
+          <h2>User Info</h2>
+          <p><strong>IP:</strong> {userInfo.ip || 'Unavailable'}</p>
+          <p><strong>Location:</strong> {userInfo.location || 'Unavailable'}</p>
+          <p><strong>Browser:</strong> {userInfo.browserFingerprint}</p>
+          <p><strong>Timestamp:</strong> {userInfo.timestamp}</p>
+          <p><strong>Entry Point:</strong> {userInfo.entryPoint}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function App() {
   return (
     <Router>
@@ -60,13 +122,7 @@ function App() {
             </div>
             
             <main className="content">
-              <h1>Your Main Content</h1>
-              <ClickableImage
-                src={clickCat}
-                alt="Continue Reading"
-                to="/continue"
-                onClick={() => console.log('Image clicked!')}
-              />
+              <MainContent />
             </main>
           </div>
         } />
