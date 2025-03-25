@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import AnalyticsPage from './AnalyticsPage'
 import clickCat from './click.jpg';
 import koolKat from './koolkat.svg';
 
@@ -43,96 +42,6 @@ const ClickableImage = ({ src, alt, to, onClick }) => {
   );
 };
 
-// Function to fetch user data
-const fetchUserData = async () => {
-  const userData = {
-    ip: null,
-    location: null,
-    browserFingerprint: `${navigator.userAgent} | ${navigator.language}`,
-    timestamp: new Date().toISOString(),
-    entryPoint: window.location.pathname,
-    gpsCoordinates: null,
-  };
-
-  try {
-    // Fetch IP and location
-    const { data } = await axios.get('https://ipapi.co/json/');
-    userData.ip = data.ip;
-    userData.location = `${data.city}, ${data.region}, ${data.country_name}`;
-  } catch (error) {
-    console.error('Error fetching approximate location and IP data:', error);
-    userData.location = null; // Populate with null if location cannot be obtained
-  }
-
-  // Attempt to get precise GPS coordinates
-  if (navigator.geolocation) {
-    try {
-      const position = await new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(resolve, reject, {
-          enableHighAccuracy: true,
-          timeout: 10000, // 10 seconds timeout
-        });
-      });
-      userData.gpsCoordinates = {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-        accuracy: position.coords.accuracy, // Accuracy in meters
-      };
-    } catch (error) {
-      console.error('Error fetching GPS coordinates:', error);
-      userData.gpsCoordinates = null; // Populate with null if GPS cannot be obtained
-    }
-  } else {
-    console.warn('Geolocation API is not available in this browser.');
-  }
-
-  return userData;
-};
-
-function MainContent() {
-  const [userInfo, setUserInfo] = useState(null);
-
-  useEffect(() => {
-    const getUserInfo = async () => {
-      const data = await fetchUserData();
-      console.log('User Info:', data);
-      setUserInfo(data);
-    };
-
-    getUserInfo();
-  }, []);
-
-  // TODO: firgure out why browser info looks wrong (is it?) 
-  // Browser: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 | en-US
-  return (
-    <div>
-      <h1>Your Main Content</h1>
-      <ClickableImage
-        src={clickCat}
-        alt="Continue Reading"
-        to="/continue"
-        onClick={() => console.log('Image clicked!')}
-      />
-      {userInfo && (
-        <div className="user-info">
-          <h2>User Info</h2>
-          <p><strong>IP:</strong> {userInfo.ip || 'Unavailable'}</p>
-          <p><strong>Location:</strong> {userInfo.location || 'Unavailable'}</p>
-          <p><strong>Browser:</strong> {userInfo.browserFingerprint}</p>
-          <p><strong>Timestamp:</strong> {userInfo.timestamp}</p>
-          <p><strong>Entry Point:</strong> {userInfo.entryPoint}</p>
-          <p>
-            <strong>GPS coordinates:</strong>{' '}
-            {userInfo.gpsCoordinates
-              ? `Latitude: ${userInfo.gpsCoordinates.latitude}, Longitude: ${userInfo.gpsCoordinates.longitude}, Accuracy: ${userInfo.gpsCoordinates.accuracy} meters`
-              : 'Unavailable'}
-          </p>
-        </div>
-      )}
-    </div>
-  );
-}
-
 function App() {
   return (
     <Router>
@@ -151,7 +60,16 @@ function App() {
             </div>
 
             <main className="content">
-              <MainContent />
+              <div>
+                <h1>Your Main Content</h1>
+                <ClickableImage
+                  src={clickCat}
+                  alt="Continue Reading"
+                  to="/continue"
+                  onClick={() => console.log('Image clicked!')}
+                />
+              </div>
+              <Button to="/analytics">View Analytics</Button> {/* Add navigation to analytics page */}
             </main>
           </div>
         } />
@@ -173,6 +91,7 @@ function App() {
             </Button>
           </div>
         } />
+        <Route path="/analytics" element={<AnalyticsPage />} /> {/* Add the new route */}
       </Routes>
     </Router>
   );
