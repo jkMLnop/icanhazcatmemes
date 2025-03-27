@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import fetchUserData from './fetchUserData';
+import { fetchUserData } from './fetchUserData';
 
 function AnalyticsPage() {
   const [userInfo, setUserInfo] = useState(null);

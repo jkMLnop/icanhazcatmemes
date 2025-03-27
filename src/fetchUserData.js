@@ -8,7 +8,7 @@ const fetchUserData = async () => {
     location: null,
     browserFingerprint: `${navigator.userAgent} | ${navigator.language}`,
     timestamp: new Date().toISOString(),
-    entryPoint: window.location.pathname,
+    entryPoint: sessionStorage.getItem('initialEntryPoint') || null,
     gpsCoordinates: null,
   };
 
@@ -47,4 +47,11 @@ const fetchUserData = async () => {
   return userData;
 };
 
+const setInitialEntryPoint = () => {
+  if (!sessionStorage.getItem('initialEntryPoint')) {
+    sessionStorage.setItem('initialEntryPoint', window.location.pathname);
+  }
+};
+
 export default fetchUserData;
+export { fetchUserData, setInitialEntryPoint };

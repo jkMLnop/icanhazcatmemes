@@ -69,7 +69,7 @@ function App() {
                   onClick={() => console.log('Image clicked!')}
                 />
               </div>
-              <Button to="/analytics">View Analytics</Button> {/* Add navigation to analytics page */}
+              <Button to="/analytics">View Analytics</Button>
             </main>
           </div>
         } />
@@ -91,7 +91,7 @@ function App() {
             </Button>
           </div>
         } />
-        <Route path="/analytics" element={<AnalyticsPage />} /> {/* Add the new route */}
+        <Route path="/analytics" element={<AnalyticsPage />} />
       </Routes>
     </Router>
   );
