@@ -10,6 +10,7 @@ const fetchUserData = async () => {
     timestamp: new Date().toISOString(),
     entryPoint: sessionStorage.getItem('initialEntryPoint') || null,
     gpsCoordinates: null,
+    navigationPath: JSON.parse(sessionStorage.getItem('navigationPath')) || [],
   };
 
   try {
@@ -50,8 +51,15 @@ const fetchUserData = async () => {
 const setInitialEntryPoint = () => {
   if (!sessionStorage.getItem('initialEntryPoint')) {
     sessionStorage.setItem('initialEntryPoint', window.location.pathname);
+    sessionStorage.setItem('navigationPath', JSON.stringify([window.location.pathname]));
   }
 };
 
+const updateNavigationPath = (newPage) => {
+  const navigationPath = JSON.parse(sessionStorage.getItem('navigationPath')) || [];
+  navigationPath.push(newPage);
+  sessionStorage.setItem('navigationPath', JSON.stringify(navigationPath));
+};
+
 export default fetchUserData;
-export { fetchUserData, setInitialEntryPoint };
+export { fetchUserData, setInitialEntryPoint, updateNavigationPath };

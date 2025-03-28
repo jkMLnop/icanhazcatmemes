@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-route
 import AnalyticsPage from './AnalyticsPage'
 import clickCat from './click.jpg';
 import koolKat from './koolkat.svg';
+import NavigationTracker from './NavigationTracker';
 
 const Button = ({ onClick, children, to }) => {
   const navigate = useNavigate();
@@ -45,6 +46,7 @@ const ClickableImage = ({ src, alt, to, onClick }) => {
 function App() {
   return (
     <Router>
+      <NavigationTracker /> 
       <Routes>
         <Route path="/" element={
           <div className="App">
