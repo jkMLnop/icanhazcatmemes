@@ -23,15 +23,21 @@ function AnalyticsPage() {
         if (sankeyContainer) {
             const data = {
                 nodes: [
-                    { id: 'a', title: 'PageA' },
-                    { id: 'b', title: 'PageB' },
-                    { id: 'c', title: 'PageC' },
-                    { id: 'd', title: 'PageD' },
+                    { id: 'h', title: 'home' },
+                    { id: 'l', title: 'learn-more' },
+                    { id: 'c', title: 'continue' },
+                    { id: 'a', title: 'analytics' },
                 ],
+                // NOTE: sankey cant handle self loops
+                // self loops are edges that start and end at the same node
                 edges: [
-                    { source: 'a', target: 'b', value: 5 },
-                    { source: 'b', target: 'c', value: 3 },
-                    { source: 'c', target: 'd', value: 2 },
+                    // { source: 'h', target: 'h', value: 2 },
+                    { source: 'h', target: 'a', value: 2 },
+                    { source: 'a', target: 'h', value: 1 },
+                    { source: 'h', target: 'l', value: 1 },
+                    { source: 'l', target: 'h', value: 1 },
+                    { source: 'h', target: 'c', value: 1 },
+                    { source: 'c', target: 'h', value: 1 },
                 ],
             };
     
