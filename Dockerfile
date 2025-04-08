@@ -7,15 +7,11 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install
 
-# Copy the rest of the app and build it
+# Copy the rest of the app
 COPY . .
-RUN npm run build
 
-# Install the `serve` package globally
-RUN npm install -g serve
-
-# Expose port 3000 for the static server
+# Expose the port React runs on
 EXPOSE 3000
 
-# Serve the built files
-CMD ["serve", "-s", "build"]
+# Start the app
+CMD ["npm", "start"]

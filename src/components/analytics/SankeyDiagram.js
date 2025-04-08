@@ -44,7 +44,12 @@ function SankeyDiagram() {
         }
     }, []);
 
-    return <div id="sankey-container" style={{ width: '800px', height: '400px' }}></div>;
+    return (
+        <div>
+            <h2>Nav Path Sankey</h2>
+            <div id="sankey-container" style={{ width: '800px', height: '400px' }}></div>
+        </div>
+    );
 }
 
 export default SankeyDiagram;

@@ -4,7 +4,7 @@ function UserNavigation({ userInfo }) {
     }
 
     return (
-        <div id="nav-path-container" style={{ width: '800px', height: '400px' }}>
+        <div id="nav-path-container" style={{ width: '800px', height: '100px' }}>
             <h2>User Navigation Paths</h2>
             <p><strong>Entry Point:</strong> {userInfo.entryPoint}</p>
             <p>
