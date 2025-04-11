@@ -1,20 +1,26 @@
-function UserNavigation({ userInfo }) {
-    if (!userInfo) {
-        return <p>Loading navigation data...</p>;
-    }
+import React, { useEffect, useState } from 'react';
+import { fetchUserNavigation } from '../../fetchUserData.js';
+
+const UserNavigationPaths = () => {
+    const [navigationData, setNavigationData] = useState({ entryPoint: null, navigationPath: [] });
+
+    useEffect(() => {
+        const data = fetchUserNavigation();
+        setNavigationData(data);
+    }, []);
 
     return (
-        <div id="nav-path-container" style={{ width: '800px', height: '100px' }}>
+        <div>
             <h2>User Navigation Paths</h2>
-            <p><strong>Entry Point:</strong> {userInfo.entryPoint}</p>
+            <p><strong>Entry Point:</strong> {navigationData.entryPoint || 'N/A'}</p>
             <p>
                 <strong>Navigation Path:</strong>{' '}
-                {userInfo.navigationPath && userInfo.navigationPath.length > 0
-                    ? userInfo.navigationPath.join(' → ')
+                {navigationData.navigationPath.length > 0
+                    ? navigationData.navigationPath.map(path => path.trim()).join(' → ')
                     : 'No navigation data available'}
             </p>
         </div>
     );
-}
+};
 
-export default UserNavigation;
+export default UserNavigationPaths;

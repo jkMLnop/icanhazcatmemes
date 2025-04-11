@@ -1,16 +1,23 @@
 import axios from 'axios';
 
-// TODO: firgure out why browser info looks wrong (is it?) 
-// Browser: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 | en-US
+// Fetch user navigation data from sessionStorage
+const fetchUserNavigation = () => {
+  return {
+    entryPoint: sessionStorage.getItem('initialEntryPoint') || null,
+    navigationPath: JSON.parse(sessionStorage.getItem('navigationPath')) || [],
+  };
+};
+
 const fetchUserData = async () => {
+  const userNavigation = fetchUserNavigation();
+
   const userData = {
     ip: null,
     location: null,
     browserFingerprint: `${navigator.userAgent} | ${navigator.language}`,
     timestamp: new Date().toISOString(),
-    entryPoint: sessionStorage.getItem('initialEntryPoint') || null,
     gpsCoordinates: null,
-    navigationPath: JSON.parse(sessionStorage.getItem('navigationPath')) || [],
+    ...userNavigation, // Include navigation data
   };
 
   try {
@@ -62,4 +69,4 @@ const updateNavigationPath = (newPage) => {
 };
 
 export default fetchUserData;
-export { fetchUserData, setInitialEntryPoint, updateNavigationPath };
+export { fetchUserData, fetchUserNavigation, setInitialEntryPoint, updateNavigationPath };

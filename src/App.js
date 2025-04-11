@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import AnalyticsPage from './AnalyticsPage'
 import clickCat from './click.jpg';
-import koolKat from './koolkat.svg';
+import koolKat from './koolkat.optimized.svg';
 import NavigationTracker from './NavigationTracker';
 
 const Button = ({ onClick, children, to }) => {

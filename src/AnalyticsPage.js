@@ -19,7 +19,7 @@ function AnalyticsPage() {
     return (
         <div className="analytics-page">
             <h1>Analytics Page</h1>
-            <UserNavigation userInfo={userInfo} />
+            <UserNavigation />
             <UserInfo userInfo={userInfo} />
             <SankeyDiagram />
         </div>
