@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { fetchUserData } from './fetchUserData';
+import fetchUserData from './fetchUserData';
 import SankeyDiagram from './components/analytics/SankeyDiagram';
 import UserInfo from './components/analytics/UserInfo';
 import UserNavigation from './components/analytics/UserNavigation';

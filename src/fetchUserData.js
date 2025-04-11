@@ -1,23 +1,12 @@
 import axios from 'axios';
 
-// Fetch user navigation data from sessionStorage
-const fetchUserNavigation = () => {
-  return {
-    entryPoint: sessionStorage.getItem('initialEntryPoint') || null,
-    navigationPath: JSON.parse(sessionStorage.getItem('navigationPath')) || [],
-  };
-};
-
 const fetchUserData = async () => {
-  const userNavigation = fetchUserNavigation();
-
   const userData = {
     ip: null,
     location: null,
     browserFingerprint: `${navigator.userAgent} | ${navigator.language}`,
     timestamp: new Date().toISOString(),
     gpsCoordinates: null,
-    ...userNavigation, // Include navigation data
   };
 
   try {
@@ -55,18 +44,4 @@ const fetchUserData = async () => {
   return userData;
 };
 
-const setInitialEntryPoint = () => {
-  if (!sessionStorage.getItem('initialEntryPoint')) {
-    sessionStorage.setItem('initialEntryPoint', window.location.pathname);
-    sessionStorage.setItem('navigationPath', JSON.stringify([window.location.pathname]));
-  }
-};
-
-const updateNavigationPath = (newPage) => {
-  const navigationPath = JSON.parse(sessionStorage.getItem('navigationPath')) || [];
-  navigationPath.push(newPage);
-  sessionStorage.setItem('navigationPath', JSON.stringify(navigationPath));
-};
-
 export default fetchUserData;
-export { fetchUserData, fetchUserNavigation, setInitialEntryPoint, updateNavigationPath };
