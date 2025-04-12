@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import fetchUserData from './fetchUserData';
 import SankeyDiagram from './components/analytics/SankeyDiagram';
 import UserInfo from './components/analytics/UserInfo';
-import UserNavigation from './components/analytics/UserNavigation';
+import UserNavigationPaths from './components/analytics/UserNavigation';
 
 function AnalyticsPage() {
     const [userInfo, setUserInfo] = useState(null);
@@ -19,7 +19,7 @@ function AnalyticsPage() {
     return (
         <div className="analytics-page">
             <h1>Analytics Page</h1>
-            <UserNavigation />
+            <UserNavigationPaths />
             <UserInfo userInfo={userInfo} />
             <SankeyDiagram />
         </div>

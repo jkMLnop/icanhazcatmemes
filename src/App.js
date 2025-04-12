@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-route
 import AnalyticsPage from './AnalyticsPage'
 import clickCat from './click.jpg';
 import koolKat from './koolkat.optimized.svg';
-import NavigationTracker from './components/analytics/UserNavigation';
+import NavigationTracker from './NavigationTracker';
 
 const Button = ({ onClick, children, to }) => {
   const navigate = useNavigate();

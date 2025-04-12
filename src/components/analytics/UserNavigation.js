@@ -59,4 +59,4 @@ const NavigationTracker = () => {
 };
 
 export default UserNavigationPaths;
-export { setInitialEntryPoint, UserNavigationPaths, NavigationTracker };
+export { setInitialEntryPoint, UserNavigationPaths, NavigationTracker, updateNavigationPath };
