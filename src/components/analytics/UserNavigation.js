@@ -1,5 +1,5 @@
 // TODO figure out nav path dupes / missing components
-import React, { useEffect } from 'react'; // Importing useEffect hook because we cant use a regular variable to manage state because component functions only run once
+import { useEffect } from 'react'; // Importing useEffect hook because we cant use a regular variable to manage state because component functions only run once
 import { useLocation } from 'react-router-dom';
 
 const setInitialEntryPoint = () => {
