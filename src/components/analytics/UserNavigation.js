@@ -47,16 +47,5 @@ const updateNavigationPath = (newPage) => {
     sessionStorage.setItem('navigationPath', JSON.stringify(navigationPath));
 };
 
-const NavigationTracker = () => {
-    const location = useLocation();
-
-    // TODO: is this needed?
-    useEffect(() => {
-        updateNavigationPath(location.pathname);
-    }, [location.pathname]);
-
-    return null; // This component doesn't render anything
-};
-
 export default UserNavigationPaths;
-export { setInitialEntryPoint, UserNavigationPaths, NavigationTracker, updateNavigationPath };
+export { setInitialEntryPoint, UserNavigationPaths, updateNavigationPath };
