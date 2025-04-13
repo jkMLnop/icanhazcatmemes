@@ -1,5 +1,5 @@
 // TODO figure out nav path dupes / missing components
-import React, { useState, useEffect } from 'react'; // Importing useEffect hook because we cant use a regular variable to manage state because component functions only run once
+import React, { useEffect } from 'react'; // Importing useEffect hook because we cant use a regular variable to manage state because component functions only run once
 import { useLocation } from 'react-router-dom';
 
 const setInitialEntryPoint = () => {
@@ -25,7 +25,7 @@ const UserNavigationPaths = () => {
     // This state will hold the user's navigation data
     // The entryPoint will store the initial page the user landed on
     // The navigationPath will store the sequence of pages the user visited
-    const [navigationData] = useState(fetchUserNavigation());
+    const navigationData = fetchUserNavigation();
 
     return (
         <div>
