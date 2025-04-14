@@ -13,6 +13,47 @@ const fetchUserNavigation = () => {
     };
 };
 
+const prepSankeyData = (navigationPath) => {
+    const sankeyData = {
+        nodes: [],
+        edges: [],
+    };
+
+    const nodeSet = new Set();
+
+    // Preprocess navigationPath to handle `/` and clean paths
+    const processedPath = navigationPath.map(path => {
+        if (path === '/') {
+            return 'home'; // Replace `/` with `home`
+        }
+        return path.replace(/^\//, ''); // Remove leading `/` from other paths
+    });
+
+    processedPath.forEach((path, index) => {
+        if (!nodeSet.has(path)) {
+            nodeSet.add(path);
+            sankeyData.nodes.push({ id: path, title: path });
+        }
+        if (index > 0) {
+            const source = processedPath[index - 1];
+            const target = path;
+
+            // Check if the edge already exists
+            const existingEdge = sankeyData.edges.find(edge => edge.source === source && edge.target === target);
+
+            if (existingEdge) {
+                // Increment the value if the edge exists
+                existingEdge.value += 1;
+            } else {
+                // Add a new edge if it doesn't exist
+                sankeyData.edges.push({ source, target, value: 1 });
+            }
+        }
+    });
+
+    return sankeyData;
+};
+
 const UserNavigationPaths = () => {
     const navigationData = fetchUserNavigation();
 
@@ -37,4 +78,4 @@ const updateNavigationPath = (newPage) => {
 };
 
 export default UserNavigationPaths;
-export { setInitialEntryPoint, UserNavigationPaths, updateNavigationPath };
+export { setInitialEntryPoint, UserNavigationPaths, updateNavigationPath, prepSankeyData, fetchUserNavigation };

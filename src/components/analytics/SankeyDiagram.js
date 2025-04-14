@@ -1,11 +1,15 @@
 import { useEffect } from 'react';
 import ApexSankey from 'apexsankey';
+import { prepSankeyData, fetchUserNavigation } from './UserNavigation';
 
 function SankeyDiagram() {
     useEffect(() => {
-        const sankeyContainer = document.getElementById('sankey-container');
-        if (sankeyContainer) {
-            const data = {
+        const staticContainer = document.getElementById('static-sankey-container');
+        const dynamicContainer = document.getElementById('dynamic-sankey-container');
+
+        if (staticContainer && dynamicContainer) {
+            // Static working Sankey data
+            const staticData = {
                 nodes: [
                     { id: 'h', title: 'home' },
                     { id: 'l', title: 'learn-more' },
@@ -22,6 +26,14 @@ function SankeyDiagram() {
                 ],
             };
 
+            // Dynamically generated Sankey data
+            const navigationData = fetchUserNavigation();
+            const dynamicData = prepSankeyData(navigationData.navigationPath);
+
+            // Log both datasets for comparison
+            console.log('Static Sankey Data:', JSON.stringify(staticData, null, 2));
+            console.log('Dynamic Sankey Data:', JSON.stringify(dynamicData, null, 2));
+
             const options = {
                 width: 800,
                 height: 400,
@@ -32,22 +44,30 @@ function SankeyDiagram() {
             };
 
             try {
-                const sankey = new ApexSankey(sankeyContainer, options);
-                sankey.render(data);
+                // Render static Sankey diagram
+                const staticSankey = new ApexSankey(staticContainer, options);
+                staticSankey.render(staticData);
+
+                // Render dynamic Sankey diagram
+                const dynamicSankey = new ApexSankey(dynamicContainer, options);
+                dynamicSankey.render(dynamicData);
             } catch (error) {
-                console.error('Error rendering Sankey diagram:', error);
+                console.error('Error rendering Sankey diagrams:', error);
             }
 
             return () => {
-                sankeyContainer.innerHTML = '';
+                staticContainer.innerHTML = '';
+                dynamicContainer.innerHTML = '';
             };
         }
     }, []);
 
     return (
         <div>
-            <h2>Nav Path Sankey</h2>
-            <div id="sankey-container" style={{ width: '800px', height: '400px' }}></div>
+            <h2>Static Sankey Diagram</h2>
+            <div id="static-sankey-container" style={{ width: '800px', height: '400px' }}></div>
+            <h2>Dynamic Sankey Diagram</h2>
+            <div id="dynamic-sankey-container" style={{ width: '800px', height: '400px' }}></div>
         </div>
     );
 }
