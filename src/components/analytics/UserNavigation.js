@@ -1,7 +1,3 @@
-// TODO figure out nav path dupes / missing components
-import { useEffect } from 'react'; // Importing useEffect hook because we cant use a regular variable to manage state because component functions only run once
-import { useLocation } from 'react-router-dom';
-
 const setInitialEntryPoint = () => {
     if (!sessionStorage.getItem('initialEntryPoint')) {
         sessionStorage.setItem('initialEntryPoint', window.location.pathname);
@@ -18,13 +14,6 @@ const fetchUserNavigation = () => {
 };
 
 const UserNavigationPaths = () => {
-    // useState is a hook that allows you to add React state to function components
-    // useState returns an array with two elements: the current state and a function to update it
-    // Here, we are initializing the state with an object containing entryPoint and navigationPath
-    // entryPoint is initialized to null and navigationPath is initialized to an empty array
-    // This state will hold the user's navigation data
-    // The entryPoint will store the initial page the user landed on
-    // The navigationPath will store the sequence of pages the user visited
     const navigationData = fetchUserNavigation();
 
     return (
