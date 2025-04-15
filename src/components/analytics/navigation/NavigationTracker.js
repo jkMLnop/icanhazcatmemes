@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { updateNavigationPath } from './components/analytics/UserNavigation';
+import { updateNavigationPath } from './UserNavigation';
 
 const NavigationTracker = () => {
   const location = useLocation();

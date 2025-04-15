@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import fetchUserData from './fetchUserData';
-import SankeyDiagram from './components/analytics/SankeyDiagram';
+import SankeyDiagram from './components/analytics/navigation/SankeyDiagram';
 import UserInfo from './components/analytics/UserInfo';
-import UserNavigationPaths from './components/analytics/UserNavigation';
+import UserNavigationPaths from './components/analytics/navigation/UserNavigation';
 
 function AnalyticsPage() {
     const [userInfo, setUserInfo] = useState(null);
