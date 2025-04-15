@@ -4,35 +4,11 @@ import { prepSankeyData, fetchUserNavigation } from './UserNavigation';
 
 function SankeyDiagram() {
     useEffect(() => {
-        const staticContainer = document.getElementById('static-sankey-container');
-        const dynamicContainer = document.getElementById('dynamic-sankey-container');
+        const sankeyContainer = document.getElementById('navigation-sankey-container');
 
-        if (staticContainer && dynamicContainer) {
-            // Static working Sankey data
-            const staticData = {
-                nodes: [
-                    { id: 'h', title: 'home' },
-                    { id: 'l', title: 'learn-more' },
-                    { id: 'c', title: 'continue' },
-                    { id: 'a', title: 'analytics' },
-                ],
-                edges: [
-                    { source: 'h', target: 'a', value: 2 },
-                    { source: 'a', target: 'h', value: 1 },
-                    { source: 'h', target: 'l', value: 1 },
-                    { source: 'l', target: 'h', value: 1 },
-                    { source: 'h', target: 'c', value: 1 },
-                    { source: 'c', target: 'h', value: 1 },
-                ],
-            };
-
-            // Dynamically generated Sankey data
+        if (sankeyContainer) {
             const navigationData = fetchUserNavigation();
-            const dynamicData = prepSankeyData(navigationData.navigationPath);
-
-            // Log both datasets for comparison
-            console.log('Static Sankey Data:', JSON.stringify(staticData, null, 2));
-            console.log('Dynamic Sankey Data:', JSON.stringify(dynamicData, null, 2));
+            const sankeyData = prepSankeyData(navigationData.navigationPath);
 
             const options = {
                 width: 800,
@@ -43,31 +19,25 @@ function SankeyDiagram() {
                 enableTooltip: true,
             };
 
-            try {
-                // Render static Sankey diagram
-                const staticSankey = new ApexSankey(staticContainer, options);
-                staticSankey.render(staticData);
+            // console.log('Navigation Sankey Data:', JSON.stringify(sankeyData, null, 2));
 
-                // Render dynamic Sankey diagram
-                const dynamicSankey = new ApexSankey(dynamicContainer, options);
-                dynamicSankey.render(dynamicData);
+            try {
+                const navigationSankey = new ApexSankey(sankeyContainer, options);
+                navigationSankey.render(sankeyData);
             } catch (error) {
-                console.error('Error rendering Sankey diagrams:', error);
+                console.error('Error rendering Sankey diagram:', error);
             }
 
             return () => {
-                staticContainer.innerHTML = '';
-                dynamicContainer.innerHTML = '';
+                sankeyContainer.innerHTML = '';
             };
         }
     }, []);
 
     return (
         <div>
-            <h2>Static Sankey Diagram</h2>
-            <div id="static-sankey-container" style={{ width: '800px', height: '400px' }}></div>
-            <h2>Dynamic Sankey Diagram</h2>
-            <div id="dynamic-sankey-container" style={{ width: '800px', height: '400px' }}></div>
+            <h2>User Navigation Sankey Diagram</h2>
+            <div id="navigation-sankey-container" style={{ width: '800px', height: '400px' }}></div>
         </div>
     );
 }
