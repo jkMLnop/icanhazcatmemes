@@ -28,7 +28,6 @@ function AnalyticsPage() {
                     location={userInfo.location}
                 />
             )}
-            <SankeyDiagram />
         </div>
     );
 }

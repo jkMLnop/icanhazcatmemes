@@ -36,7 +36,7 @@ function SankeyDiagram() {
 
     return (
         <div>
-            <h2>User Navigation Sankey Diagram</h2>
+            <h4>User Navigation Sankey Diagram</h4>
             <div id="navigation-sankey-container" style={{ width: '800px', height: '400px' }}></div>
         </div>
     );

@@ -1,3 +1,5 @@
+import SankeyDiagram from "./SankeyDiagram";
+
 const setInitialEntryPoint = () => {
     if (!sessionStorage.getItem('initialEntryPoint')) {
         sessionStorage.setItem('initialEntryPoint', window.location.pathname);
@@ -67,6 +69,7 @@ const UserNavigationPaths = () => {
                     ? navigationData.navigationPath.map(path => path).join(' → ')
                     : 'No navigation data available'}
             </p>
+            <SankeyDiagram />
         </div>
     );
 };
